@@ -1,0 +1,16 @@
+com.discordapp.Discord
+com.github.tchx84.Flatseal
+com.mattjakeman.ExtensionManager
+com.sayonara_player.Sayonara
+com.spotify.Client
+com.ulduzsoft.Birdtray
+fm.reaper.Reaper
+md.obsidian.Obsidian
+me.kozec.syncthingtk
+org.chromium.Chromium
+org.gnome.gThumb
+org.kde.okular
+org.mozilla.Thunderbird
+org.mozilla.firefox
+org.telegram.desktop
+org.videolan.VLC
