@@ -4,17 +4,25 @@
 
 ***Sources:*** 
 
-# Disk
-- Install ntfs-3g
-- Set ntfs-3g as system filetype
-
 # Update system
-- sudo apt update && sudo apt dist-upgrade -y
-- sudo reboot
 
+## Remove Ubuntu Pro ads
+```
+sudo rm /etc/apt/apt.conf.d/20apt-esm-hook.conf
+```
+## Update system 
+```
+sudo apt update && sudo apt dist-upgrade -y
+sudo reboot
+```
+# Disk
+```
+sudo apt install ntfs-3g
+echo "/dev/sda1 /mnt/storage ntfs-3g nosuid,nodev,nofail,x-gvfs-show 0 0" | sudo tee -a /etc/fstab
+```
 # System settings
 - Bluetooth = False
-- Appearance - Dark
+- Appearance = Dark
 - Sound
   - Over-Amplification = True
   - System Sounds = False
@@ -35,7 +43,9 @@ sudo apt install far2l -y
 ```
 
 # Gnome Tweaks
-- sudo apt install gnome-tweaks -y
+```
+sudo apt install gnome-tweaks -y
+```
 - Fonts
   - Scaling Factor = 1.10
 - Keyboard & Mouse 
@@ -55,10 +65,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 ```
 
 # Gnome Extensions
-```
-sudo apt install fish -y
-```
-- Dash to panel
+- Dash to panel - Set settings when disabled
   - Visible taskbar only and centred
   - App Icon Margin = 2px
   - Ungroup apllications
@@ -75,7 +82,6 @@ sudo apt install fish -y
 	- Startup Status - Desktop
 - ArcMenu
 	- Layout - Runner
-- sudo reboot
 
 # Terminal
 
@@ -92,7 +98,7 @@ sudo apt install fish -y
 ```
  
 ## Lazygit 
-```fish
+```
 set LAZYGIT_VERSION (curl -s "https://api.github.com/repos
 /jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{$LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -131,17 +137,33 @@ git config --global user.name "Pixaler"
 git config --global user.email "gnidko02@gmail.com"
 ```
 ## Python
-- sudo apt install python3.10-venv python3-pip python-is-python3
-- sudo apt install python3.10-tk
+```
+sudo apt install python3-venv python3-pip python-is-python3
+sudo apt install python3-tk
+```
 
 # Kernel
-- sudo apt-mark hold linux-image-generic linux-headers-generic
-- 
+
+## Stop updating kernel
+```
+sudo apt-mark hold linux-image-generic linux-headers-generic
+```
+
 ## Ubuntu kernel
 - sudo apt-get build-dep linux-image-$(uname -r)
 - sudo apt install build-essential libncurses5-dev fakeroot xz-utils libelf-dev bison flex dwarves
 - cp /boot/config-$(uname -r) .config
-If fails on certificate: https://askubuntu.com/questions/1329538/compiling-the-kernel-5-11-11
+- In .config
+```
+CONFIG_SYSTEM_TRUSTED_KEYS=""
+CONFIG_SYSTEM_REVOCATION_KEYS=""
+
+CONFIG_DEBUG_INFO=n
+CONFIG_DEBUG_INFO_DWARF5=n
+CONFIG_DEBUG_INFO_BTF=n
+```
+- make -j8 bindeb-pkg
+
 
 ## Vanila kernel
 - sudo apt install gcc make build-essential libncurses5-dev fakeroot xz-utils libelf-dev libssl-dev bison flex dwarves debhelper -y
@@ -157,15 +179,3 @@ CONFIG_DEBUG_INFO_DWARF5=n
 CONFIG_DEBUG_INFO_BTF=n
 ```
 - make -j8 bindeb-pkg
-
----
-# Archived
-
-## Video cards
-- sudo nano /etc/modprobe.d/amdgpu.conf
-  options amdgpu si_support=1
-  options amdgpu cik_support=1
-- sudo nano /etc/modprobe.d/radeon.conf
-	blacklist radeon
-- sudo update-initramfs -c -k all
-
